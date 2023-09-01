@@ -1,6 +1,5 @@
 === Shiparon ===
 Contributors: Montassar Hazgui
-Donate link: https://shiparon.com
 Tags: woocommerce, shipping, api
 Requires at least: 4.0
 Tested up to: 4.8
