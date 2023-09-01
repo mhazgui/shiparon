@@ -26,6 +26,7 @@
 // Exit if accessed directly.
 if ( ! defined( 'ABSPATH' ) ) exit;
 
-// Include your custom code here.
+// Include admin options. This page will get the API end point and use it later to post shipment info to the carrier website.
 include(dirname(__FILE__) . '/includes/admin-options.php');
+// Include WooCommerce options. This file will add a news options meta box in the order page .
 require(dirname(__FILE__) . '/includes/woo-options.php');
