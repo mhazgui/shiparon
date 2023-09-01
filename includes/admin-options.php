@@ -1,8 +1,13 @@
 <?php
 
-class NAVEX_Options_Panel {
+/**
+ * Class Shiparon_Options_Panel
+ *
+ * @package Shiparon
+ */
+class Shiparon_Options_Panel {
 
-    /**
+   /**
      * Options panel arguments.
      */
     protected $args = [];
@@ -38,7 +43,10 @@ class NAVEX_Options_Panel {
     protected $settings = [];
 
     /**
-     * Our class constructor.
+     * Class constructor.
+     *
+     * @param array $args     The arguments for the options panel.
+     * @param array $settings The settings to register.
      */
     public function __construct( array $args, array $settings ) {
         $this->args              = $args;
