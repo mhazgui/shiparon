@@ -121,7 +121,7 @@ class ShiparonAdvancedOptionsMetabox
         [
             "label" => "Export",
             "value" => "",
-            "id" => "navex_export_btn",
+            "id" => "shiparon_export_btn",
             "type" => "href",
             "default" => "",
         ]
@@ -137,8 +137,8 @@ class ShiparonAdvancedOptionsMetabox
     {
         foreach ($this->screens as $s) {
             add_meta_box(
-                "NavexAdvancedOptions",
-                __("Navex Advanced Options", "navex"),
+                "ShiparonAdvancedOptions",
+                __("Shiparon Advanced Options", "shiparon"),
                 [$this, "meta_box_callback"],
                 $s,
                 "normal",
@@ -159,7 +159,7 @@ class ShiparonAdvancedOptionsMetabox
         $order = new WC_Order( $post->ID );
 
         if ($order) {
-            $exportUrl = get_post_meta($post->ID, 'navex_order_export_url', true);
+            $exportUrl = get_post_meta($post->ID, 'shiparon_order_export_url', true);
             foreach ($this->fields as $field) {
                 $label =
                     '<label for="' .
@@ -185,7 +185,7 @@ class ShiparonAdvancedOptionsMetabox
                         $field["default"] = $order->get_billing_city();
                     }
                     if ($field["id"] === "article" || $field["id"] === "designation") {
-                        $field["default"] = get_option("navex_options")[
+                        $field["default"] = get_option("shiparon_options")[
                             "default_product_title"
                         ];
                     }
@@ -267,15 +267,15 @@ class ShiparonAdvancedOptionsMetabox
                         jQuery('#submit_form_data').click((e) => {
                             e.preventDefault();
                             $('#submit_form_data').attr('disabled', true);
-                            const form = $('#NavexAdvancedOptions').find('input:not([type="hidden"]), select, textarea');
+                            const form = $('#ShiparonAdvancedOptions').find('input:not([type="hidden"]), select, textarea');
                             var formData = new FormData();
                             const formInput = form.serializeArray()
 
                             for (let key in formInput) {
                                 formData.append(formInput[key]['name'], formInput[key]['value'])
                             }
-                            var baseUrl = `<?php echo get_option("navex_options")[
-                                "navex_base_url"
+                            var baseUrl = `<?php echo get_option("shiparon_options")[
+                                "shiparon_base_url"
                             ];?>`;
                             var settings = {
                                 'url': baseUrl,
@@ -290,13 +290,13 @@ class ShiparonAdvancedOptionsMetabox
                             if (baseUrl) {
                                 $.ajax(settings).done(function (response) {
                                     form.attr('disabled', false);
-                                    $('#navex_export_btn').attr('disabled', false);
-                                    $('#navex_export_btn').attr('href', JSON.parse(response)?.lien);
-                                    document.cookie = `navex_order_export_url_${<?php echo $post->ID; ?>}=${JSON.parse(response)?.lien}`;
+                                    $('#shiparon_export_btn').attr('disabled', false);
+                                    $('#shiparon_export_btn').attr('href', JSON.parse(response)?.lien);
+                                    document.cookie = `shiparon_order_export_url_${<?php echo $post->ID; ?>}=${JSON.parse(response)?.lien}`;
                                     <?php
-                                        $exportUrl = $_COOKIE['navex_order_export_url_' . $post->ID];
-                                        if ( ! add_post_meta( $post->ID, 'navex_order_export_url', $exportUrl, true ) ) { 
-                                            update_post_meta ( $post->ID, 'navex_order_export_url', $exportUrl );
+                                        $exportUrl = $_COOKIE['shiparon_order_export_url_' . $post->ID];
+                                        if ( ! add_post_meta( $post->ID, 'shiparon_order_export_url', $exportUrl, true ) ) { 
+                                            update_post_meta ( $post->ID, 'shiparon_order_export_url', $exportUrl );
                                         }
                                     ?>
                                 }).fail(function() {
@@ -352,7 +352,7 @@ class ShiparonAdvancedOptionsMetabox
             } elseif ($field["type"] === "checkbox") {
                 update_post_meta(
                     $post_id,
-                    $field["navex_order_meta"]["id"],
+                    $field["shiparon_order_meta"]["id"],
                     "0"
                 );
             }
@@ -374,6 +374,6 @@ class ShiparonAdvancedOptionsMetabox
     }
 }
 
-if (class_exists("NavexAdvancedOptionsMetabox")) {
-    new NavexAdvancedOptionsMetabox;
+if (class_exists("ShiparonAdvancedOptionsMetabox")) {
+    new ShiparonAdvancedOptionsMetabox;
 }

@@ -193,7 +193,7 @@ class Shiparon_Options_Panel {
             add_settings_error(
                $this->option_name . '_mesages',
                $this->option_name . '_message',
-               esc_html__( 'Settings Saved', 'navex' ),
+               esc_html__( 'Settings Saved', 'shiparon' ),
                'updated'
             );
         }
@@ -362,23 +362,23 @@ class Shiparon_Options_Panel {
 }
 
 $panel_args = [
-    'title'           => 'Navex Options',
-    'option_name'     => 'navex_options',
-    'slug'            => 'navex-options-panel',
+    'title'           => 'Shiparon Options',
+    'option_name'     => 'shiparon_options',
+    'slug'            => 'shiparon-options-panel',
     'user_capability' => 'manage_options',
 ];
 
 $panel_settings = [
-    'navex_base_url' => [
-        'label'       => esc_html__( 'API endpoint', 'navex' ),
+    'shiparon_base_url' => [
+        'label'       => esc_html__( 'API endpoint', 'shiparon' ),
         'type'        => 'text'
     ],
     'default_product_title' => [
-        'label'       => esc_html__( 'Default Product title', 'navex' ),
+        'label'       => esc_html__( 'Default Product title', 'shiparon' ),
         'type'        => 'text'
     ],
 ];
 
-if (class_exists('NAVEX_Options_Panel')) {
-    new NAVEX_Options_Panel( $panel_args, $panel_settings );
+if (class_exists('Shiparon_Options_Panel')) {
+    new Shiparon_Options_Panel( $panel_args, $panel_settings );
 };

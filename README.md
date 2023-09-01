@@ -1,7 +1,7 @@
 * API to add shipment
-https://app.navex.tn/api/maparatunisie-ED542HG6JD4458CB5456/documentation/documentation.php
+https://app.shiparon.tn/api/maparatunisie-ED542HG6JD4458CB5456/documentation/documentation.php
 * API to check shipment status
-https://app.navex.tn/api/maparatunisie-etat-ED542HG6JD4458CB5456/documentation/documentation.php
+https://app.shiparon.tn/api/maparatunisie-etat-ED542HG6JD4458CB5456/documentation/documentation.php
 
 
 

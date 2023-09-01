@@ -23,7 +23,7 @@
  * along with Shiparon. If not, see <https://www.gnu.org/licenses/gpl-3.0.html/>.
  */
 
-// Exit if accessed directly.
+// Exit if accessed directly to enhance security.
 if ( ! defined( 'ABSPATH' ) ) exit;
 
 // Include admin options. This page will get the API end point and use it later to post shipment info to the carrier website.
