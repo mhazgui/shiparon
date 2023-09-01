@@ -27,5 +27,5 @@
 if ( ! defined( 'ABSPATH' ) ) exit;
 
 // Include your custom code here.
-include(dirname(__FILE__) . '//includes/admin-options.php');
+include(dirname(__FILE__) . '/includes/admin-options.php');
 require(dirname(__FILE__) . '/includes/woo-options.php');
