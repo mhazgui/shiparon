@@ -2,7 +2,7 @@
 // Meta-Box Generator
 // How to use: $meta_value = get_post_meta( $post_id, $field_id, true );
 // Example: get_post_meta( get_the_ID(), "my_metabox_field", true );
-class NavexAdvancedOptionsMetabox
+class ShiparonAdvancedOptionsMetabox
 {
     private $screens = ["shop_order"];
 
