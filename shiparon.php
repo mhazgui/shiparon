@@ -4,7 +4,7 @@
  *
  * @package       Shiparon
  * @author        Shiparon
- * @license       gplv2
+ * @license       gplv3
  * @version       1.0.0
  *
  * @wordpress-plugin
@@ -16,11 +16,11 @@
  * Author URI:    https://shiparon.com
  * Text Domain:   Shiparon
  * Domain Path:   /languages
- * License:       GPLv2
+ * License:       GPLv3
  * License URI:   https://shiparon.com
  *
  * You should have received a copy of the GNU General Public License
- * along with Shiparon. If not, see <https://www.gnu.org/licenses/gpl-2.0.html/>.
+ * along with Shiparon. If not, see <https://www.gnu.org/licenses/gpl-3.0.html/>.
  */
 
 // Exit if accessed directly.
