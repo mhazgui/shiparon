@@ -1,26 +1,26 @@
 <?php
 /**
- * Navex
+ * Shiparon
  *
- * @package       NAVEX
- * @author        Navex
+ * @package       Shiparon
+ * @author        Shiparon
  * @license       gplv2
  * @version       1.0.0
  *
  * @wordpress-plugin
- * Plugin Name:   Navex
- * Plugin URI:    https://navex.tn
+ * Plugin Name:   Shiparon
+ * Plugin URI:    https://shiparon.com
  * Description:   This is some demo short description...
  * Version:       1.0.0
- * Author:        Navex
- * Author URI:    https://navex.tn
- * Text Domain:   navex
+ * Author:        Shiparon
+ * Author URI:    https://shiparon.com
+ * Text Domain:   Shiparon
  * Domain Path:   /languages
  * License:       GPLv2
- * License URI:   https://navex.tn
+ * License URI:   https://shiparon.com
  *
  * You should have received a copy of the GNU General Public License
- * along with Navex. If not, see <https://www.gnu.org/licenses/gpl-2.0.html/>.
+ * along with Shiparon. If not, see <https://www.gnu.org/licenses/gpl-2.0.html/>.
  */
 
 // Exit if accessed directly.
