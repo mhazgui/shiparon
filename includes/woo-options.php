@@ -191,31 +191,42 @@ class ShiparonAdvancedOptionsMetabox {
 					'</label>';
 				$meta_value = get_post_meta( $post->ID, $field['id'], true );
 				if ( empty( $meta_value ) ) {
-					if ( $field['id'] === 'prix' ) {
-						$field['default'] = $order->total;
-					}
-					if ( $field['id'] === 'nom' ) {
-						$field['default'] = $order->get_billing_first_name() . ' ' . $order->get_billing_last_name();
-					}
-					if ( $field['id'] === 'adresse' ) {
-						$field['default'] = $order->get_billing_address_1();
-					}
-					if ( $field['id'] === 'tel' ) {
-						$field['default'] = $order->get_billing_phone();
-					}
-					if ( $field['id'] === 'ville' ) {
-						$field['default'] = $order->get_billing_city();
-					}
-					if ( $field['id'] === 'article' || $field['id'] === 'designation' ) {
-						$field['default'] = get_option( 'shiparon_options' )['default_product_title'];
-					}
-					if ( $field['id'] === 'nb_article' ) {
-						$field['default'] = $order->get_item_count();
-					}
-					if ( $field['id'] === 'href' ) {
-						$field['value']   = $export_url;
-						$field['default'] = $export_url;
-					}
+					switch ( $field['id'] ) :
+						case 'prix':
+							$field['default'] = $order->total;
+							break;
+
+						case 'nom':
+							$field['default'] = $order->get_billing_first_name() . ' ' . $order->get_billing_last_name();
+							break;
+						case 'adresse':
+							$field['default'] = $order->get_billing_address_1();
+							break;
+
+						case 'tel':
+							$field['default'] = $order->get_billing_phone();
+							break;
+
+						case 'ville':
+							$field['default'] = $order->get_billing_city();
+							break;
+
+						case 'article':
+						case 'designation':
+							$field['default'] = get_option( 'shiparon_options' )['default_product_title'];
+							break;
+
+						case 'nb_article':
+							$field['default'] = $order->get_item_count();
+							break;
+
+						case 'href':
+							$field['value']   = $export_url;
+							$field['default'] = $export_url;
+							break;
+
+						endswitch;
+
 					if ( isset( $field['default'] ) ) {
 						$meta_value = $field['default'];
 					}
@@ -265,8 +276,8 @@ class ShiparonAdvancedOptionsMetabox {
 						$input = sprintf(
 							'<input %s id="%s" name="%s" type="%s" value="%s" %s>',
 							$field['type'] !== 'color'
-								? 'style="width: 100%"'
-								: '',
+							? 'style="width: 100%"'
+							: '',
 							$field['id'],
 							$field['id'],
 							$field['type'],
@@ -274,10 +285,10 @@ class ShiparonAdvancedOptionsMetabox {
 							isset( $export_url ) && ! empty( $export_url ) ? 'disabled' : '',
 						);
 				}
-				$output .= $this->format_rows( $label, $input, $field['type'] );
+					$output .= $this->format_rows( $label, $input, $field['type'] );
 			}
-			ob_start();
-			echo '<table class="form-table"><tbody>' .
+				ob_start();
+				echo '<table class="form-table"><tbody>' .
 				$output .
 				'</tbody></table>';
 			?>
@@ -332,29 +343,29 @@ class ShiparonAdvancedOptionsMetabox {
 		}
 	}
 
-	/**
-	 * Format rows.
-	 *
-	 * @param  [type] $label
-	 * @param  [type] $input
-	 * @param  [type] $field_type
-	 */
+		/**
+		 * Format rows.
+		 *
+		 * @param  [type] $label
+		 * @param  [type] $input
+		 * @param  [type] $field_type
+		 */
 	public function format_rows( $label, $input, $field_type ) {
 		if ( $field_type !== 'button' || $field_type !== 'href' ) {
 			return '<div style="margin-top: 10px;"><strong>' .
-				$label .
-				'</strong></div><div>' .
-				$input .
+			$label .
+			'</strong></div><div>' .
+			$input .
 			'</div>';
 		}
 		return $input;
 	}
 
-	/**
-	 * Save the metabox values to the database
-	 *
-	 * @param  Integer $post_id The ID of the post savings fields for
-	 */
+		/**
+		 * Save the metabox values to the database
+		 *
+		 * @param  Integer $post_id The ID of the post savings fields for
+		 */
 	public function save_fields( $post_id ) {
 		if ( ! isset( $_POST['AdvancedOptions_nonce'] ) ) {
 			return $post_id;
@@ -391,17 +402,17 @@ class ShiparonAdvancedOptionsMetabox {
 		}
 	}
 
-	/**
-	 * Returns an option value.
-	 *
-	 * @param  string $option_name The name of the option to get the value for.
-	 */
+		/**
+		 * Returns an option value.
+		 *
+		 * @param  string $option_name The name of the option to get the value for.
+		 */
 	protected function get_option_value( $option_name ) {
 		$option = get_option( $this->option_name );
 		if ( ! array_key_exists( $option_name, $option ) ) {
 			return array_key_exists( 'default', $this->settings[ $option_name ] )
-				? $this->settings[ $option_name ]['default']
-				: '';
+			? $this->settings[ $option_name ]['default']
+			: '';
 		}
 		return $option[ $option_name ];
 	}
