@@ -1,0 +1,15 @@
+{
+    "name": "mhazgui/shiparon",
+    "description": "Shiparon automates the shipping label creation. In one click your shipments are sent directly to the shipper, a label is generated, and your tracking informations are available directly from the woo-commerce backend.",
+    "require": {
+    },
+    "require-dev": {
+        "phpcompatibility/phpcompatibility-wp": "^2.1",
+        "wp-coding-standards/wpcs": "^3.0.0"
+    },
+    "config": {
+        "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": true
+        }
+    }
+}
