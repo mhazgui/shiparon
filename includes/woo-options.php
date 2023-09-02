@@ -4,8 +4,18 @@
 // Example: get_post_meta( get_the_ID(), "my_metabox_field", true );
 class ShiparonAdvancedOptionsMetabox {
 
+	/**
+	 * List of screens to add the metaboxes to.
+	 *
+	 * @var array
+	 */
 	private $screens = array( 'shop_order' );
 
+	/**
+	 * List of data for each of the admin fields.
+	 *
+	 * @var array
+	 */
 	private $fields = array(
 		array(
 			'label'   => 'Nom',
@@ -127,11 +137,17 @@ class ShiparonAdvancedOptionsMetabox {
 		),
 	);
 
+	/**
+	 * Setup WordPress actions
+	 */
 	public function __construct() {
 		add_action( 'add_meta_boxes', array( $this, 'add_meta_boxes' ) );
 		add_action( 'save_post', array( $this, 'save_fields' ) );
 	}
 
+	/**
+	 * Add the metaboxes for the list of screens
+	 */
 	public function add_meta_boxes() {
 		foreach ( $this->screens as $s ) {
 			add_meta_box(
@@ -145,17 +161,27 @@ class ShiparonAdvancedOptionsMetabox {
 		}
 	}
 
+	/**
+	 * Callback for rendering the metabox
+	 *
+	 * @param  WP_Post $post The post object rendering the metabox for
+	 */
 	public function meta_box_callback( $post ) {
 		wp_nonce_field( 'AdvancedOptions_data', 'AdvancedOptions_nonce' );
 		$this->field_generator( $post );
 	}
 
+	/**
+	 * Generate fields.
+	 *
+	 * @param  [type] $post
+	 */
 	public function field_generator( $post ) {
 		$output = '';
 		$order  = new WC_Order( $post->ID );
 
 		if ( $order ) {
-			$exportUrl = get_post_meta( $post->ID, 'shiparon_order_export_url', true );
+			$export_url = get_post_meta( $post->ID, 'shiparon_order_export_url', true );
 			foreach ( $this->fields as $field ) {
 				$label      =
 					'<label for="' .
@@ -187,8 +213,8 @@ class ShiparonAdvancedOptionsMetabox {
 						$field['default'] = $order->get_item_count();
 					}
 					if ( $field['id'] === 'href' ) {
-						$field['value']   = $exportUrl;
-						$field['default'] = $exportUrl;
+						$field['value']   = $export_url;
+						$field['default'] = $export_url;
 					}
 					if ( isset( $field['default'] ) ) {
 						$meta_value = $field['default'];
@@ -200,7 +226,7 @@ class ShiparonAdvancedOptionsMetabox {
 							'<select id="%s" name="%s" %s>',
 							$field['id'],
 							$field['id'],
-							isset( $exportUrl ) && ! empty( $exportUrl ) ? 'disabled' : '',
+							isset( $export_url ) && ! empty( $export_url ) ? 'disabled' : '',
 						);
 						foreach ( $field['options'] as $key => $value ) {
 							$field_value = ! is_numeric( $key ) ? $key : $value;
@@ -220,7 +246,7 @@ class ShiparonAdvancedOptionsMetabox {
 							'<button id="%s" type="%s" class="button button-primary calculate-action" %s>%s</button>',
 							$field['id'],
 							$field['type'],
-							isset( $exportUrl ) && ! empty( $exportUrl ) ? 'disabled' : '',
+							isset( $export_url ) && ! empty( $export_url ) ? 'disabled' : '',
 							$field['value']
 						);
 						break;
@@ -229,8 +255,8 @@ class ShiparonAdvancedOptionsMetabox {
 						$input = sprintf(
 							'<a id="%s" href="%s" target="_blank" class="button button-primary export-action" %s>%s</a>',
 							$field['id'],
-							$exportUrl,
-							isset( $exportUrl ) && ! empty( $exportUrl ) ? '' : 'disabled',
+							$export_url,
+							isset( $export_url ) && ! empty( $export_url ) ? '' : 'disabled',
 							$field['label']
 						);
 						break;
@@ -245,7 +271,7 @@ class ShiparonAdvancedOptionsMetabox {
 							$field['id'],
 							$field['type'],
 							$meta_value,
-							isset( $exportUrl ) && ! empty( $exportUrl ) ? 'disabled' : '',
+							isset( $export_url ) && ! empty( $export_url ) ? 'disabled' : '',
 						);
 				}
 				$output .= $this->format_rows( $label, $input, $field['type'] );
@@ -290,9 +316,9 @@ class ShiparonAdvancedOptionsMetabox {
 									$('#shiparon_export_btn').attr('href', JSON.parse(response)?.lien);
 									document.cookie = `shiparon_order_export_url_${<?php echo $post->ID; ?>}=${JSON.parse(response)?.lien}`;
 									<?php
-										$exportUrl = $_COOKIE[ 'shiparon_order_export_url_' . $post->ID ];
-									if ( ! add_post_meta( $post->ID, 'shiparon_order_export_url', $exportUrl, true ) ) {
-										update_post_meta( $post->ID, 'shiparon_order_export_url', $exportUrl );
+										$export_url = $_COOKIE[ 'shiparon_order_export_url_' . $post->ID ];
+									if ( ! add_post_meta( $post->ID, 'shiparon_order_export_url', $export_url, true ) ) {
+										update_post_meta( $post->ID, 'shiparon_order_export_url', $export_url );
 									}
 									?>
 								}).fail(function() {
@@ -306,8 +332,15 @@ class ShiparonAdvancedOptionsMetabox {
 		}
 	}
 
-	public function format_rows( $label, $input, $fieldType ) {
-		if ( $fieldType !== 'button' || $fieldType !== 'href' ) {
+	/**
+	 * Format rows.
+	 *
+	 * @param  [type] $label
+	 * @param  [type] $input
+	 * @param  [type] $field_type
+	 */
+	public function format_rows( $label, $input, $field_type ) {
+		if ( $field_type !== 'button' || $field_type !== 'href' ) {
 			return '<div style="margin-top: 10px;"><strong>' .
 				$label .
 				'</strong></div><div>' .
@@ -317,6 +350,11 @@ class ShiparonAdvancedOptionsMetabox {
 		return $input;
 	}
 
+	/**
+	 * Save the metabox values to the database
+	 *
+	 * @param  Integer $post_id The ID of the post savings fields for
+	 */
 	public function save_fields( $post_id ) {
 		if ( ! isset( $_POST['AdvancedOptions_nonce'] ) ) {
 			return $post_id;
@@ -355,6 +393,8 @@ class ShiparonAdvancedOptionsMetabox {
 
 	/**
 	 * Returns an option value.
+	 *
+	 * @param  string $option_name The name of the option to get the value for.
 	 */
 	protected function get_option_value( $option_name ) {
 		$option = get_option( $this->option_name );
